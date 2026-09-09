@@ -110,6 +110,37 @@ A challenge-response exchange shall satisfy the following:
   challenge nonce.
 
 
+[[delivery-exchange]]
+=== Credential exchange
+
+Delivery to a verifier is only half the movement of a credential: a
+credential must also reach its subject, and a verifier must be able to
+_ask_ for one that is not yet in hand. A _credential exchange_ is a
+two-turn protocol between a holder and a coordinator (an issuer about to
+issue, or a verifier requesting presentation) in which the holder asks
+and the coordinator responds. A credential exchange shall:
+
+* be initiated by the party that wants the credential — an issuer cannot
+  push a credential to a subject that has not asked, and a verifier cannot
+  obtain one the holder has not presented;
+* authenticate the holder by an _identifier-control challenge_: before
+  issuing to, or accepting a presentation from, an identifier, the
+  coordinator challenges the holder to sign a fresh nonce with the key
+  behind that identifier, proving the credential lands on (or comes from)
+  the party that controls it;
+* satisfy the nonce requirements of <<delivery-challenge-response>> for
+  the identifier-control challenge (entropy, binding, single use).
+
+NOTE: The identifier-control challenge is the same construction as the
+device-signer challenge-response of <<delivery-challenge-response>>,
+generalized from proving a device key is live to proving a holder controls
+an identifier. The two-turn shape (ask, then challenge, then deliver)
+applies to issuance (the subject collects its own credential) and to
+presentation (the holder answers a verifier's request). Exchange _state_
+is a service concern: a conversation has state, and a coordinator that
+runs exchanges operates a stateful endpoint, which the deployment
+manifest shall declare.
+
 [[req-delivery]]
 === Requirements
 

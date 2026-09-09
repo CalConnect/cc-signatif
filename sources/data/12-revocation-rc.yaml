@@ -26,6 +26,18 @@ groups:
       examples:
       - When X.509 certificates are used, the CRL profile follows RFC 5280.
 
+    - name: Status list revocation surface
+      identifier_fragment: status-list-surface
+      statement: A scheme operating revocation as a status list shall publish it as a
+        signed document of the issuing authority, encoding at least unset, revoked,
+        and suspended per credential, and shall define the semantic consequence of
+        each status value in the scheme profile; revocation propagation shall apply
+        to status-list revocations as it does to CRL revocations.
+      guidance:
+      - W3C Bitstring Status List is an example of a recognized encoding.
+      - A scheme shall state whether it operates a CRL, a status list, or both;
+        a verifier shall consult every declared surface.
+
     - name: Hash-binding to authority states
       identifier_fragment: hash-binding
       statement: A trusted artifact shall carry a cryptographic hash-binding to the authority

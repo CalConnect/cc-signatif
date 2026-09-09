@@ -37,6 +37,35 @@ NOTE: X.509 CRLs as profiled in <<rfc5280>> are an example of a recognized CRL
 format.
 
 
+[[revocation-status-list]]
+=== Status lists
+
+A scheme may operate revocation as a _status list_: a signed, compactly
+encoded bitstring in which each issued credential occupies an indexed slot,
+published by the revoking authority and fetchable by any verifier without
+per-credential queries. A status list used for SIGNATIF revocation shall:
+
+* be a signed document issued by the authority that issued the credentials it
+  statuses;
+* encode a per-credential status of at least unset, revoked, and suspended;
+* carry a validity period and an update policy sufficient for verifiers to
+  detect staleness (see <<revocation-offline>>);
+* define the semantic meaning of each status value in the scheme's profile —
+  the encoding carries the value, the profile assigns the consequence.
+
+A status list and a CRL are alternative surfaces for the same revocation
+decision; a scheme shall state which surface (or both) it operates, and a
+verifier configured for the scheme shall consult every declared surface.
+Revocation propagation (<<revocation-propagation>>) applies to status-list
+revocations exactly as to CRL revocations.
+
+NOTE: W3C Bitstring Status List entries attached to verifiable credentials
+(see <<annex-g>>) are an example of a recognized status list format. Where a
+scheme composes with verifiable credentials, the status list is the native
+surface; where a scheme operates X.509 chains, the CRL is native. A scheme
+may operate both and reconcile them through the transparency log.
+
+
 [[revocation-hash-binding]]
 === Hash-binding to authority states
 

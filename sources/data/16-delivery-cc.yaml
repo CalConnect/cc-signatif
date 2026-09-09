@@ -61,6 +61,17 @@ groups:
         integrity protection, and caching support.
       type: Conformance
 
+    - name: Credential exchange test
+      identifier_fragment: credential-exchange
+      targets:
+      - /req/delivery/credential-exchange
+      purpose: Verify credential exchanges are holder-initiated and authenticate the holder.
+      method: Run an issuance exchange and a presentation exchange. Verify the
+        coordinator does not deliver without a holder request, and does not issue
+        to or accept from an identifier until the holder has signed a fresh nonce
+        with the key behind that identifier. Verify nonce reuse is rejected.
+      type: Conformance
+
     - name: Challenge-response protocol test
       identifier_fragment: challenge-response
       targets:

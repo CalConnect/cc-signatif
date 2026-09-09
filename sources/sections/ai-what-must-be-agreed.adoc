@@ -1,0 +1,123 @@
+[[annex-agreement]]
+[appendix,obligation=informative]
+== What must be agreed
+
+This annex records what has to be agreed — by a single arrangement, across
+arrangements, and infrastructure-wide — for independent trust infrastructures
+to interoperate, and where this document addresses each item. It is adapted
+from the harmonisation analysis of the _Verifiable credentials for the quality
+infrastructure_ exploration{empty}footnote:[An independent, unofficial
+exploration of W3C Verifiable Credentials applied to the quality
+infrastructure (metrology, accreditation, legal metrology). Its analysis of
+what would have to be agreed informed this annex.], which implemented a
+three-branch trust graph (metrology, accreditation, legal metrology) end to
+end and documented every interoperability obstacle it met.
+
+
+=== Per arrangement
+
+Within one scheme, the deploying arrangement agrees:
+
+. *One cryptosuite, and one canonical form.* Addressed by
+  <<artifact-canonical-payload>> (canonical payload determinism) and
+  <<algorithms>> (the registry names what is recognized).
+
+. *One protocol for asking, not just one format for answering.* Delivery of
+  a credential to its subject, and presentation to a verifier, are
+  conversations. Addressed by <<delivery-exchange>>.
+
+. *One identifier method, and an agreed meaning for resolving it.* The scheme
+  declares its identifier method; cross-identifier meaning is the
+  cross-arrangement tier below.
+
+. *How a chain crosses from one arrangement into the other.* Addressed by
+  cross-domain co-signatures (<<artifact-cosignatures>>) and multi-path
+  verification (<<architecture-discovery>> for path enumeration): the chains compose at the
+  artifact, not by cross-certification of the roots.
+
+. *What a status value means, not how it is encoded.* Addressed by
+  <<revocation-status-list>>: the profile assigns the consequence; the
+  encoding carries the value.
+
+. *What the anchors' identifiers are, and how a verifier learns them.*
+  Addressed by the trust anchor bundle (<<architecture-anchors>>) and its
+  versioned, out-of-band distribution.
+
+. *What a document authorises, as distinct from what it attests.* A type
+  evaluation attests; the legal permission to use the instrument comes from
+  the competent authority of each jurisdiction. A scheme profile shall state
+  the authorisation semantics of each credential type it defines, so a
+  verifier never reads an attestation as a licence.
+
+. *What identifies a type, rather than an instrument.* Addressed by the
+  model and serial scope dimensions (<<tab-scope-dimensions>>): the type
+  identity is a scope dimension of its own, narrowed independently of the
+  individual instrument.
+
+
+=== Across arrangements
+
+Between arrangements that want to recognise each other:
+
+. *Whose timestamps everybody accepts.* Addressed by the time dimension
+  (<<time-dimension>>) and external, irrefutable anchoring: the anchored
+  commitment is accepted regardless of whose clock produced it.
+
+. *Which copy governs.* Addressed by the transparency log as the record of
+  what was true (<<transparency>>): the log's history, provable by
+  consistency proof, governs over any presented copy.
+
+. *How long an identifier goes on meaning what it means.* Identifier
+  longevity is an institutional commitment the framework cannot create; the
+  manifest declares the operator's retention policy, and long-term
+  verification (archival re-signing) is specified in the key-lifecycle
+  clause.
+
+. *A log of what was true, not a document saying what is true.* This is the
+  transparency log's reason for existing (<<transparency>>), including the
+  by-hash index by which a verifier confirms every certificate on a path.
+
+. *Who still serves the documents a verification reads.* Dependency
+  documents (evaluation reports, calibration states) must remain fetchable
+  for the artifact's lifetime; the hash-binding model
+  (<<revocation-hash-binding>>) lets a verifier hold the digest, but the
+  serving obligation is an operational commitment declared in the manifest.
+
+
+=== Infrastructure-wide
+
+For the discipline as a whole:
+
+. *One digital representation of the SI.* Unit authority is outside this
+  document's scope; schemes reference a common unit authority so quantity
+  values compare.
+
+. *Machine-actionable requirements, in the instrument standard itself.*
+  When the Recommendation carries its requirements machine-readably, the
+  scope condition language (<<scope-conditions>>) evaluates against them
+  directly rather than against a transcribed form.
+
+. *A certificate format with international standing.* The purpose of this
+  document: a format any conforming verifier can check offline.
+
+. *Measurand and quantity identifiers.* Shared identifiers for measurands
+  and quantities, so a certified capability and a claimed measurement name
+  the same thing.
+
+. *How uncertainty travels, dependencies included.* At the calibration
+  tier, uncertainty propagation across dependency chains is a metrological
+  concern this framework carries (as signed measurement content) but does
+  not compute; the state-binding model preserves the dependency structure a
+  GUM propagation would need.
+
+
+=== Reading of the tiers
+
+The pattern across the tiers: the per-arrangement items are profile
+decisions this document's requirements already name; the cross-arrangement
+items are what the transparency log, the anchoring model, and the co-signature
+composition exist to settle; the infrastructure-wide items are institutional
+commitments no framework can create, only declare. A scheme that claims
+conformance to this document has answered the first tier by construction,
+and has the machinery to answer the second; the third tier is the standards
+and institutional work that remains genuinely open.
