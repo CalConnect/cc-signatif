@@ -261,6 +261,87 @@ SIGNATIF adds the trust infrastructure layer that VC does not specify:
   invalid). SIGNATIF produces an objective coverage report that the scheme's
   classification policy maps to domain-specific grade labels.
 
+=== Two trust models: recognition claims and delegated authority
+
+A trust model built on verifiable credentials typically establishes issuer
+trust through recognition credentials: an anchor issues a credential asserting
+that an organization was recognized under an arrangement at a given time, the
+recognized organization issues credentials of its own, and a verifier walks
+the recognition links at verification time to decide whether to accept an
+issuer's credential. In this model, a link in the trust chain is a claim
+about an issuer's standing.
+
+The model specified in this document establishes issuer trust through
+cryptographic delegation: the root authority delegates signing authority to a
+key, narrowed to a scope, and the delegation is enforced by verification
+itself. In this model, a link in the trust chain is delegated authority: an
+artifact outside the delegated scope does not verify, regardless of any claim
+made about the issuer's standing (<<trust-chain-scope>>).
+
+<<tab-vc-trust-models>> summarizes the consequences of the difference.
+
+[[tab-vc-trust-models]]
+.Trust-topology consequences: recognition claims versus delegated authority
+[cols="2,3,3",options="header"]
+|===
+| Property | Recognition-chain model | Delegated-authority model (this document)
+
+| A trust link is
+| A signed claim about an issuer's standing
+| Delegated signing authority, narrowed by scope (<<trust-chain-scope>>)
+
+| Bound on issuer authority
+| The verifier compares each artifact against the recognition claims after
+  issuance
+| Scope is enforced at verification; an out-of-scope artifact does not verify
+  (<<trust-chain-scope>>, <<scope-conditions>>)
+
+| Compromise of an anchor key
+| Forges recognition at will; unbounded within the model
+| A threshold quorum is required at every authority level (<<threshold-signing>>)
+
+| Covert issuance
+| Possible; credentials carry no public-record requirement
+| Detectable by construction; transparency log inclusion is a verification
+  requirement (<<transparency>>)
+
+| Which copy of a record governs
+| Unsettled; independently fetched documents may disagree
+| The log's provable history governs over any presented copy (<<transparency>>)
+
+| Reach of revocation
+| The revoked credential
+| Every artifact transitively bound to the revoked state
+  (<<revocation-propagation>>)
+
+| Verification posture
+| Online: identifier resolution and status retrieval
+| Offline-capable: anchor bundle, embedded chains, cached state
+  (<<architecture-anchors>>)
+
+| Assessment result
+| Binary acceptance of the issuer chain
+| Coverage report and scheme classification (<<verification-classification>>)
+|===
+
+Both models are sound engineering for their respective questions. The
+recognition model answers *who is this organization and what is it recognized
+for*: accreditation registers, mutual-recognition listings, and institutional
+directories are natural applications, and the verifiable-credentials ecosystem
+serves them well. The delegated model answers *may this key perform this act,
+and can the act be audited afterwards*: regulated artifact issuance falls in
+this class, because a regulator must bound issuer authority cryptographically,
+detect covert issuance, and propagate revocation to everything issued under a
+withdrawn state. These obligations follow from the regulatory role, not from a
+deficiency of the credential model.
+
+The models compose rather than compete. A recognition credential can be
+carried as the identity dimension of a SIGNATIF artifact, and the composition
+patterns above allow verifiable-credentials infrastructure to present
+artifacts whose authority, transparency, and revocation remain in the
+delegated model. What each side of such a composition still has to agree is
+recorded in <<annex-agreement>>.
+
 === Adoption paths
 
 Organizations already using VCs can adopt SIGNATIF incrementally:
