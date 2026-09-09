@@ -59,6 +59,19 @@ groups:
       guidance:
       - The specific transport protocol is out of scope of this document.
 
+    - name: Credential exchange
+      identifier_fragment: credential-exchange
+      statement: A credential exchange between a holder and a coordinator shall be
+        holder-initiated, and shall authenticate the holder through an
+        identifier-control challenge in which the holder signs a fresh nonce with
+        the key behind the identifier the credential names, before the credential
+        is issued to or accepted from that identifier.
+      guidance:
+      - The nonce satisfies the challenge-response requirements (entropy, binding,
+        single use).
+      - Applies to issuance (subject collects its credential) and to presentation
+        (holder answers a verifier's request).
+
     - name: Challenge-response protocol
       identifier_fragment: challenge-response
       statement: A challenge-response exchange shall use a nonce with at least 128 bits of entropy,

@@ -24,6 +24,17 @@ groups:
         and is recorded in a transparency log.
       type: Validation
 
+    - name: Status list surface validation
+      identifier_fragment: status-list-surface
+      targets:
+      - /req/revocation/status-list-surface
+      purpose: Verify a scheme's status list carries the required statuses and semantics.
+      method: Inspect the status list document and the scheme profile. Verify it is
+        signed by the credential-issuing authority, encodes at least unset, revoked,
+        and suspended per credential, defines the consequence of each value, and that
+        revocation propagation applies to status-list revocations.
+      type: Validation
+
     - name: Hash-binding validation
       identifier_fragment: hash-binding
       targets:

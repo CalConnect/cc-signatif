@@ -76,4 +76,6 @@ include::sections/ag-vc-composition.adoc[]
 
 include::sections/ah-dpp-composition.adoc[]
 
+include::sections/ai-what-must-be-agreed.adoc[]
+
 include::sections/99-bibliography.adoc[]
